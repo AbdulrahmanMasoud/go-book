@@ -5,20 +5,19 @@ import (
 	"strings"
 )
 
-type UpdateBlogRequest struct {
+type UpdateBookRequest struct {
 	gorm.Model
-	UserId  uint   `json:"user_id"`
 	Title   string `gorm:"type:varchar(500)" json:"title" binding:"required"`
 	Content string `gorm:"type:text" json:"content" binding:"required"`
 	Slug    string `gorm:"type:varchar(500);unique" json:"slug"`
 }
 
-func (UpdateBlogRequest) TableName() string {
-	return "blogs"
+func (UpdateBookRequest) TableName() string {
+	return "books"
 }
 
-func (blog *UpdateBlogRequest) BeforeUpdate(tx *gorm.DB) (err error) {
-	slug := strings.ToLower(strings.Replace(blog.Title, " ", "-", -1))
-	blog.Slug = slug
+func (book *UpdateBookRequest) BeforeUpdate(tx *gorm.DB) (err error) {
+	slug := strings.ToLower(strings.Replace(book.Title, " ", "-", -1))
+	book.Slug = slug
 	return
 }

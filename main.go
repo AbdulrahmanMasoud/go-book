@@ -3,7 +3,6 @@ package main
 import (
 	"github.com/AbdulrahmanMasoud/blog/controllers"
 	"github.com/AbdulrahmanMasoud/blog/database"
-	"github.com/AbdulrahmanMasoud/blog/middlewares"
 	"github.com/AbdulrahmanMasoud/blog/models"
 	"github.com/gin-gonic/gin"
 )
@@ -14,28 +13,17 @@ func main() {
 
 	defer conn.Close()
 	//db.Migrator().DropTable(&models.Blog{})
-	db.AutoMigrate(&models.User{}, &models.Blog{})
+	db.AutoMigrate(&models.Book{})
 
 	route := gin.Default()
-	route.POST("/register", controllers.Register)
-	route.POST("/login", controllers.Login)
-
-	route.Use(middlewares.IsAuth())
+	//Blog Resource
+	books := route.Group("/blogs")
 	{
-		route.GET("/profile", controllers.Profile)
-
-		//Blog Resource
-		blogs := route.Group("/blogs")
-		{
-			blogs.GET("/", controllers.Index)
-			blogs.GET("/:id", controllers.Show)
-			blogs.POST("/store", controllers.Store)
-			blogs.PUT("/:id/update", controllers.Update)
-			blogs.DELETE("/:id/delete", controllers.Delete)
-
-			// By User
-			blogs.GET("user/:user_id", controllers.ShowByUser)
-		}
+		books.GET("/", controllers.Index)
+		books.GET("/:id", controllers.Show)
+		books.POST("/store", controllers.Store)
+		books.PUT("/:id/update", controllers.Update)
+		books.DELETE("/:id/delete", controllers.Delete)
 	}
 
 	route.Run()

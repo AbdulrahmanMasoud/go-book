@@ -8,7 +8,7 @@ import (
 )
 
 func Connect() *gorm.DB {
-	dsn := "masoud:password@tcp(127.0.0.1:3306)/blog?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "masoud:password@tcp(127.0.0.1:3306)/gobook?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		fmt.Println("Error connect to database", err.Error())

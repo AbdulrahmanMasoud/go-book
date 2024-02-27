@@ -4,9 +4,8 @@ import (
 	"gorm.io/gorm"
 )
 
-type Blog struct {
+type Book struct {
 	gorm.Model
-	UserId  uint   `json:"user_id"`
 	Title   string `gorm:"type:varchar(500)" json:"title"`
 	Content string `gorm:"type:text" json:"content"`
 	Slug    string `gorm:"type:varchar(500);unique" json:"slug"`

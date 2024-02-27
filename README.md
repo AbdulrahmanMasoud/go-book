@@ -1,1 +1,1 @@
-# golang blog
+# golang book
