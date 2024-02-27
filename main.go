@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/AbdulrahmanMasoud/blog/controllers"
-	"github.com/AbdulrahmanMasoud/blog/database"
-	"github.com/AbdulrahmanMasoud/blog/models"
+	"github.com/AbdulrahmanMasoud/go-book/controllers"
+	"github.com/AbdulrahmanMasoud/go-book/database"
+	"github.com/AbdulrahmanMasoud/go-book/models"
 	"github.com/gin-gonic/gin"
 )
 
@@ -12,11 +12,11 @@ func main() {
 	conn := database.Connection(db)
 
 	defer conn.Close()
-	//db.Migrator().DropTable(&models.Blog{})
+	//db.Migrator().DropTable(&models.Book{})
 	db.AutoMigrate(&models.Book{})
 
 	route := gin.Default()
-	//Blog Resource
+	//Book Resource
 	books := route.Group("/blogs")
 	{
 		books.GET("/", controllers.Index)
@@ -27,5 +27,4 @@ func main() {
 	}
 
 	route.Run()
-
 }

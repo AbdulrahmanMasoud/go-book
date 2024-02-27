@@ -1,9 +1,9 @@
 package controllers
 
 import (
-	"github.com/AbdulrahmanMasoud/blog/database"
-	"github.com/AbdulrahmanMasoud/blog/models"
-	requests "github.com/AbdulrahmanMasoud/blog/requests/blog"
+	"github.com/AbdulrahmanMasoud/go-book/database"
+	"github.com/AbdulrahmanMasoud/go-book/models"
+	requests "github.com/AbdulrahmanMasoud/go-book/requests/book"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -15,13 +15,13 @@ func Index(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": books})
 }
 
-// Show blog by id or slug
+// Show book by id or slug
 func Show(c *gin.Context) {
 	db := database.Connect()
 	var book models.Book
 	db.Where("id =?", c.Param("id")).Or("slug =?", c.Param("id")).First(&book)
 	if book.ID == 0 {
-		c.AbortWithStatusJSON(http.StatusNotFound, gin.H{"error": "Not found this blog"})
+		c.AbortWithStatusJSON(http.StatusNotFound, gin.H{"error": "Not found this book"})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": book})
@@ -32,16 +32,16 @@ func ShowByUser(c *gin.Context) {
 	db := database.Connect()
 	var book []models.Book
 	db.Debug().Where("user_id =?", c.Param("user_id")).Find(&book)
-	//if blog.ID == 0 {
-	//	c.AbortWithStatusJSON(http.StatusNotFound, gin.H{"error": "Not found this blog"})
+	//if book.ID == 0 {
+	//	c.AbortWithStatusJSON(http.StatusNotFound, gin.H{"error": "Not found this book"})
 	//	return
 	//}
-	c.JSON(http.StatusOK, gin.H{"data": blog})
+	c.JSON(http.StatusOK, gin.H{"data": book})
 }
 
 func Store(c *gin.Context) {
 	db := database.Connect()
-	var book requests.CreateBlogRequest
+	var book requests.CreateBookRequest
 	if err := c.ShouldBindJSON(&book); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -58,7 +58,7 @@ func Store(c *gin.Context) {
 
 func Update(c *gin.Context) {
 	db := database.Connect()
-	var book requests.UpdateBlogRequest
+	var book requests.UpdateBookRequest
 	if err := c.ShouldBindJSON(&book); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

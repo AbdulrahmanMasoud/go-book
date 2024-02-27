@@ -1,4 +1,4 @@
-module github.com/AbdulrahmanMasoud/blog
+module github.com/AbdulrahmanMasoud/go-book
 
 go 1.17
 
